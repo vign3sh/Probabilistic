@@ -1,9 +1,10 @@
 from constants.constants import *
-import random
+from probab.cell import Cell
 from probab.utility import *
 
 
-def examine(cell, exp_grid, grid):
+# Call directly whe cell-terrain is already determined
+def examine(cell, exp_grid, grid, agent):
     i, j = cell.get_xy()
     check = check_goal(cell)
     if check:
@@ -11,12 +12,14 @@ def examine(cell, exp_grid, grid):
     oldpg = cell.get_pg()
     change = cell.get_pf() * oldpg
     cell.set_pg(oldpg - change)
-    change_prob(exp_grid, i, j, change, oldpg)
-    return 'Go Ahead'
+
+    return change_prob(exp_grid, cell, change, oldpg, agent)
 
 
-# Used directly from terrain type when new block is visited
-def examine_first(cell, exp_grid, grid):
+# Called when new block is visited.
+def examine_first(cell, exp_grid, grid, agent):
+    # to kow the terrain/block
+    terrain_type(cell, exp_grid, grid, agent)
     i = cell.get_xy()[0]
     j = cell.get_xy()[1]
     oldpg = cell.get_pg()
@@ -24,20 +27,19 @@ def examine_first(cell, exp_grid, grid):
     if cell.get_terrain() == 0:
         cell.set_pg(0)
         change = oldpg
-        change_prob(exp_grid, i, j, change, oldpg)
+        change_prob(exp_grid, cell, change, oldpg, agent)
         return "Block"
 
     else:
         cell.set_pg(oldpg / 0.7)
         change = oldpg - cell.get_pg()
-        change_prob(exp_grid, i, j, change, oldpg)
-        print(cell.get_pg())
-        return examine(exp_grid[i][j], exp_grid, grid)
+        change_prob(exp_grid, cell, change, oldpg, agent)
+        # print(cell.get_pg())
+        return examine(exp_grid[i][j], exp_grid, grid, agent)
 
 
-def terrain_type(cell, exp_grid, grid):
+def terrain_type(cell, exp_grid, grid, agent):
     x, y = cell.get_xy()
-
     if grid[x][y] == Block_Terrain:
         exp_grid[x][y].set_terrain(Block_Terrain)
         exp_grid[x][y].set_pf(0)
@@ -53,18 +55,33 @@ def terrain_type(cell, exp_grid, grid):
     else:
         exp_grid[x][y].set_terrain(Forest_Terrain)
         exp_grid[x][y].set_pf(0.2)
-    return examine_first(exp_grid[x][y], exp_grid, grid)
 
 
-def change_prob(exp_grid, x, y, change, pxy):
-    # maxPro = 0
-    # maxCell = null
+def change_prob(exp_grid, cell, change, pxy, agent) -> Cell:
+    """
+
+    :rtype: Cell
+    """
+    maxProb = cell.get_pg()
+    maxCell = [cell]
+
     for i in range(len(exp_grid)):
         for j in range(len(exp_grid)):
-            if not (i == x and y == j):
+            if not ((i, j) == cell.get_xy()):
                 pij = exp_grid[i][j].Pg
                 pij = pij + (pij / (1 - pxy)) * change
                 exp_grid[i][j].set_pg(pij)
-                # if pij > maxPron and dist(xy, targ) > dist(ij, targ):
-                # maxcell = ij
-                # maxprob = pij
+                if agent == 6:
+                    if pij > maxProb and (len(maxCell) == 0 or check_dist(cell, maxCell[-1]) > check_dist(cell, exp_grid[i][j])):
+                        maxCell.clear()
+                        maxCell.append(exp_grid[i][j])
+                        maxProb = pij
+
+                    elif pij == maxProb and check_dist(cell, maxCell[-1]) > check_dist(cell, exp_grid[i][j]):
+                        maxCell.clear()
+                        maxCell.append(exp_grid[i][j])
+
+                    elif pij == maxProb and check_dist(cell, maxCell[-1]) == check_dist(cell, exp_grid[i][j]):
+                        maxCell.append(exp_grid[i][j])
+
+    return maxCell[random.randint(0, len(maxCell)-1)]
