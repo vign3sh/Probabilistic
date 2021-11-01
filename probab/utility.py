@@ -41,6 +41,10 @@ def check_distance(cell, current_cell, max_cell):
     return dist2-dist1
 
 
+def check_dist(a, b):
+    return abs(a.get_xy()[0] - b.get_xy()[0]) + abs(a.get_xy()[1] - b.get_xy()[1])
+
+
 def check_goal(cell):
     val = random.uniform(0, 1)
     if cell.get_target():

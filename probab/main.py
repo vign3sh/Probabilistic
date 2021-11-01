@@ -1,6 +1,6 @@
 from grid import Grid
 from probab.examine import *
-from probab.getmax import *
+from probab.search import *
 from probab.utility import *
 
 
@@ -17,18 +17,22 @@ def call_agent(agents):
     examined_cells = set()
 
     # print(start)
+    # print(start)
     print_grid(grid, n, goal)
     # print_ex_grid(explored_grid, n)
     start_cell = explored_grid[start[0]][start[1]]
     examined_cells.add(start_cell)
-    result = terrain_type(start_cell, explored_grid, grid)
-    print(result)
-    if result == 'Go Ahead':
-        print_ex_grid(explored_grid, n)
-        # print_cell_type(explored_grid, n)
+
     for i in agents:
-        max_cell = get_max(start_cell, explored_grid, n, i)
+        max_cell = examine_first(start_cell, explored_grid, grid, i)
         print(max_cell.get_xy(), start)
+        print_ex_grid(explored_grid, n)
+        print_cell_type(explored_grid, n)
+        # max_cell = get_max(start_cell, explored_grid, n, i)
+        # print(max_cell.get_xy(), start)
+        path = find_path(start_cell, max_cell, explored_grid, n)
+
+
 
 
 n = GLOBAL_SMALL_MAZE_SIZE
