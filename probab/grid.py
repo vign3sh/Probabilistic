@@ -9,7 +9,7 @@ class Grid:
     @staticmethod
     def make_grid(n):
         grid = [[0 for i in range(n)] for j in range(n)]
-        #print(grid)
+        # print(grid)
         for i in range(0, n):
             for j in range(0, n):
                 p = random.uniform(0, 1)

@@ -1,4 +1,4 @@
-
+import random
 
 def print_ex_grid(g, n):
     for i in range(n):
@@ -32,3 +32,18 @@ def print_cell_type(g, n):
 
 def check_distance(cell, current_cell, max_cell):
     #Return more than zero if current cell is closer than max cell
+    dist1 = 0
+    dist2 = 0
+    for i in range(2):
+        dist1 += abs(cell.get_xy()[i]-current_cell.get_xy()[i])
+        dist2 += abs(cell.get_xy()[i]-max_cell.get_xy()[i])
+
+    return dist2-dist1
+
+
+def check_goal(cell):
+    val = random.uniform(0, 1)
+    if cell.get_target():
+        if val < cell.get_pf():
+            return True
+    return False

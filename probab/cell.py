@@ -10,12 +10,12 @@ class Cell:
     def __init__(self, x, y, terrain, pf, pg):
         self.terrain = terrain
         self.isTarget = False
+        # True Positive
         self.Pf = pf
         self.Pg = pg
-        #self.Pfg = self.Pg * self.Pf
+        # self.Pfg = self.Pg * self.Pf
         self.X = x
         self.Y = y
-        self.isTarget = False
 
     def get_xy(self):
         return self.X, self.Y
