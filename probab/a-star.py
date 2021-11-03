@@ -3,6 +3,7 @@ import heapq as heap
 from agents.agent import Agent
 from probab.utility import *
 
+from constants.constants import *
 
 def repeated_astar(grid, start_state, end_state, agent):
 
@@ -47,14 +48,16 @@ def a_star(grid, start_state, end_state):
             continue
 
         for child in children:
-            if child in closed_list:
+            x, y = child.get_xy()
+
+            if grid[x][y] == Block_Terrain or child in closed_list:
                 continue
 
             old_state = get_element_from_list(priority_queue, child)
 
             if old_state is None:
                 heap.heappush(priority_queue, child)
-            elif closer_from_start(old_state, child):
+            elif closer_from_start(old_state, child, start_state):
                 update_with_child(priority_queue, child, old_state)
     return []
 
@@ -62,9 +65,9 @@ def a_star(grid, start_state, end_state):
 def get_neighbor(state, grid):
     neighbors = []
     positions = [[0, 1], [1, 0], [1, 1], [-1, -1], [-1, 0], [0, -1], [1, -1], [-1, 1]]
+    x, y = state.get_xy()
     for i in positions:
-        if len(grid) > state.x + i[0] >= 0 and len(grid) > state.y + i[1] >= 0:
-            x, y = state.get_xy()
+        if len(grid) > x + i[0] >= 0 and len(grid) > y + i[1] >= 0:
             neighbor = grid[x + i[0]][y + i[1]]
             neighbors.append(neighbor)
     return neighbors
