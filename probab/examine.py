@@ -8,12 +8,12 @@ def examine(cell, exp_grid, grid, agent):
     i, j = cell.get_xy()
     check = check_goal(cell)
     if check:
-        return "Goal", cell
+        return "goal", cell
     oldpg = cell.get_pg()
     change = cell.get_pf() * oldpg
     cell.set_pg(oldpg - change)
 
-    return "Continue", change_prob(exp_grid, cell, change, oldpg, agent)
+    return "continue", change_prob(exp_grid, cell, change, oldpg, agent)
 
 
 # Called when new block is visited.
@@ -29,7 +29,7 @@ def examine_first(cell, exp_grid, grid, agent, examined_cells):
         cell.set_pg(0)
         change = oldpg
         change_prob(exp_grid, cell, change, oldpg, agent)
-        return "Block", cell
+        return "block", cell
 
     else:
         cell.set_pg(oldpg / 0.7)
@@ -73,7 +73,7 @@ def change_prob(exp_grid, cell, change, pxy, agent) -> Cell:
                 pij = pij + (pij / (1 - pxy)) * change
                 exp_grid[i][j].set_pg(pij)
                 if agent == 6:
-                    if pij > maxProb and (len(maxCell) == 0 or check_dist(cell, maxCell[-1]) > check_dist(cell, exp_grid[i][j])):
+                    if pij > maxProb:
                         maxCell.clear()
                         maxCell.append(exp_grid[i][j])
                         maxProb = pij

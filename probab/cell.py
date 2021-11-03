@@ -48,15 +48,11 @@ class Cell:
         self.terrain = ter
 
     def __eq__(self, state):
-        return self.X == state.x and self.Y == state.y
+        return self.X == state.X and self.Y == state.Y
 
     def __contains__(self, item):
-        return self.X == item.x and self.Y == item.y
+        return self.X == item.X and self.Y == item.Y
 
     def __hash__(self):
-        return hash(self.X + "_" + self.Y)
+        return hash(str(self.X) + "_" + str(self.Y))
 
-    def __lt__(self, nxt):
-        if isinstance(nxt, Cell):
-            return self.Pg < nxt.Pg
-        return -1

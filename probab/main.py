@@ -1,11 +1,20 @@
-from grid import Grid
+from grid import *
+from probab.astar import *
 from probab.examine import *
 from probab.utility import *
 from agents.agent import *
 
 
 def call_agent(agents):
-    # grid, start, goal = Grid.make_grid(n)
+    while True:
+        grid, start, goal = make_grid(n)
+        explored_grid = make_empty_grid(n, goal)
+        start_cell = explored_grid[start[0]][start[1]]
+        print(start, goal)
+        goal_cell = explored_grid[goal[0]][goal[1]]
+        if len(a_star(explored_grid, start_cell, goal_cell)) > 0:
+            break
+    '''
     grid = [[3, 1, 1, 0, 3],
             [2, 3, 0, 1, 0],
             [0, 0, 2, 3, 3],
@@ -13,7 +22,8 @@ def call_agent(agents):
             [3, 1, 3, 2, 0]]
     start = [4, 0]
     goal = [3, 1]
-    explored_grid = Grid.make_empty_grid(n, goal)
+    '''
+
     examined_cells = set()
     # print(start)
     print_grid(grid, n, goal)
@@ -24,7 +34,7 @@ def call_agent(agents):
         path = agent_element.agent(start_cell, explored_grid, grid, n, examined_cells)
 
         for cell in path:
-            print(cell.getxy())
+            print(cell.get_xy())
 
 # step 1: examine start to get goal state
 # step 2: pass the goal state to a-star and get path

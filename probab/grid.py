@@ -1,55 +1,54 @@
 import random
 from cell import Cell
 
+start = []
+goal = []
 
-class Grid:
-    start = []
-    goal = []
 
-    @staticmethod
-    def make_grid(n):
-        grid = [[0 for i in range(n)] for j in range(n)]
-        # print(grid)
-        for i in range(0, n):
-            for j in range(0, n):
-                p = random.uniform(0, 1)
-                if p <= 0.3:
-                    grid[i][j] = 0
-                elif 0.3 < p <= 0.5333:
-                    grid[i][j] = 1
-                elif 0.5333 < p < 0.7666:
-                    grid[i][j] = 2
-                else:
-                    grid[i][j] = 3
+def make_grid(n):
+    grid = [[0 for i in range(n)] for j in range(n)]
+    # print(grid)
+    for i in range(0, n):
+        for j in range(0, n):
+            p = random.uniform(0, 1)
+            if p <= 0.3:
+                grid[i][j] = 0
+            elif 0.3 < p <= 0.5333:
+                grid[i][j] = 1
+            elif 0.5333 < p < 0.7666:
+                grid[i][j] = 2
+            else:
+                grid[i][j] = 3
 
-        while True:
-            i = random.randint(0, n-1)
-            j = random.randint(0, n-1)
+    while True:
+        i = random.randint(0, n - 1)
+        j = random.randint(0, n - 1)
 
-            if grid[i][j] != 0:
-                goal = [i, j]
-                break
+        if grid[i][j] != 0:
+            goal = [i, j]
+            break
 
-        while True:
-            i = random.randint(0, n - 1)
-            j = random.randint(0, n - 1)
+    while True:
+        i = random.randint(0, n - 1)
+        j = random.randint(0, n - 1)
 
-            if grid[i][j] != 0 and not(i == goal[0] and j == goal[1]):
-                start = [i, j]
-                break
-        return grid, start, goal
+        if grid[i][j] != 0 and not (i == goal[0] and j == goal[1]):
+            start = [i, j]
+            break
+    return grid, start, goal
 
-    @staticmethod
-    def make_empty_grid(n, goal):
-        g = [[Cell for i in range(n)] for j in range(n)]
-        # print(grid)
-        for i in range(0, n):
-            for j in range(0, n):
-                g[i][j] = Cell(i, j, -1, 0.35, 1 / (n * n))
-                if i == goal[0] and j == goal[1]:
-                    g[i][j].set_target()
 
-        return g
+def make_empty_grid(n, goal):
+    g = [[Cell for i in range(n)] for j in range(n)]
+    # print(grid)
+    for i in range(0, n):
+        for j in range(0, n):
+            g[i][j] = Cell(i, j, -1, 0.35, 1 / (n * n))
+            if i == goal[0] and j == goal[1]:
+                g[i][j].set_target()
+
+    return g
+
 
 '''
 

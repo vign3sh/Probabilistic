@@ -51,3 +51,8 @@ def check_goal(cell):
         if val < cell.get_pf():
             return True
     return False
+
+
+def print_path(path):
+    for state in path:
+        print(state.get_xy())
