@@ -21,8 +21,8 @@ def repeated_astar(grid, start_state, end_state, agent):
 
         if path[len(path) - 1] == end_state:
             # to be implemented
-            end_state = agent.follow_path(grid, path)
-            #add_to_final_path(final_path, start_state, final_state)
+            final_state = agent.follow_path(grid, path)
+            add_to_final_path(final_path, start_state, final_state)
             if final_state == end_state:
                 return final_path
             start_state = final_state       
