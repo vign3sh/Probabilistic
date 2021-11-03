@@ -1,7 +1,12 @@
 import heapq as heap
 
+from agents.agent import Agent
+from probab.utility import *
 
-def repeated_astar(grid, start_state, end_state):
+
+def repeated_astar(grid, start_state, end_state, agent):
+
+    agent = Agent(agent)
     final_path = []
     while True:
         # print(explored_grid)
@@ -15,8 +20,8 @@ def repeated_astar(grid, start_state, end_state):
 
         if path[len(path) - 1] == end_state:
             # to be implemented
-            final_state = agent.follow_path(grid, path)
-            add_to_final_path(final_path, start_state, final_state)
+            end_state = agent.follow_path(grid, path)
+            #add_to_final_path(final_path, start_state, final_state)
             if final_state == end_state:
                 return final_path
             start_state = final_state       
@@ -59,7 +64,7 @@ def get_neighbor(state, grid):
     positions = [[0, 1], [1, 0], [1, 1], [-1, -1], [-1, 0], [0, -1], [1, -1], [-1, 1]]
     for i in positions:
         if len(grid) > state.x + i[0] >= 0 and len(grid) > state.y + i[1] >= 0:
-            x,y = state.get_xy()
+            x, y = state.get_xy()
             neighbor = grid[x + i[0]][y + i[1]]
             neighbors.append(neighbor)
     return neighbors
@@ -86,7 +91,7 @@ def get_element_from_list(input_list, element):
 
 
 def closer_from_start(old_state, new_state, start_state):
-    return get_distance(old_state) > get_distance(new_state)
+    return check_dist(start_state, old_state) > check_dist(start_state, new_state)
 
 
 # Here we are replacing the element to be popped with the last element and removing the last element and then re-heapify

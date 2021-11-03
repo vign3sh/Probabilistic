@@ -17,7 +17,8 @@ def examine(cell, exp_grid, grid, agent):
 
 
 # Called when new block is visited.
-def examine_first(cell, exp_grid, grid, agent):
+def examine_first(cell, exp_grid, grid, agent, examined_cells):
+    examined_cells.add(cell)
     # to kow the terrain/block
     terrain_type(cell, exp_grid, grid, agent)
     i = cell.get_xy()[0]
