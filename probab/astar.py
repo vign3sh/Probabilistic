@@ -1,13 +1,9 @@
 import heapq as heap
-
-from agents.agent import Agent
 from probab.utility import *
-
 from constants.constants import *
 
-def repeated_astar(grid, start_state, end_state, agent):
 
-    agent = Agent(agent)
+def repeated_astar(grid, start_state, end_state, agent):
     final_path = []
     while True:
         # print(explored_grid)

@@ -1,7 +1,7 @@
 from grid import Grid
 from probab.examine import *
-from probab.search import *
 from probab.utility import *
+from agents.agent import *
 
 
 def call_agent(agents):
@@ -15,23 +15,16 @@ def call_agent(agents):
     goal = [3, 1]
     explored_grid = Grid.make_empty_grid(n, goal)
     examined_cells = set()
-
-    # print(start)
     # print(start)
     print_grid(grid, n, goal)
     # print_ex_grid(explored_grid, n)
     start_cell = explored_grid[start[0]][start[1]]
-
-
     for i in agents:
-        max_cell = examine_first(start_cell, explored_grid, grid, i, examined_cells)
-        print(max_cell.get_xy(), start)
-        print_ex_grid(explored_grid, n)
-        print_cell_type(explored_grid, n)
-        # max_cell = get_max(start_cell, explored_grid, n, i)
-        # print(max_cell.get_xy(), start)
-        path = find_path(start_cell, max_cell, explored_grid, n)
+        agent_element = Agent(i)
+        path = agent_element.agent(start_cell, explored_grid, grid, n, examined_cells)
 
+        for cell in path:
+            print(cell.getxy())
 
 # step 1: examine start to get goal state
 # step 2: pass the goal state to a-star and get path
