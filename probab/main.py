@@ -1,11 +1,19 @@
-from grid import Grid
+from grid import *
+from probab.a_star import a_star
 from probab.examine import *
 from probab.search import *
 from probab.utility import *
 
 
 def call_agent(agents):
-    # grid, start, goal = Grid.make_grid(n)
+    while True:
+        grid, start, goal = make_grid(n)
+        explored_grid = make_empty_grid(n, goal)
+        start_cell = explored_grid[start[0]][start[1]]
+        goal_cell = explored_grid[goal[0]][goal[1]]
+        if len(a_star(grid, start_cell, goal_cell, explored_grid)) > 0:
+            break
+    '''
     grid = [[3, 1, 1, 0, 3],
             [2, 3, 0, 1, 0],
             [0, 0, 2, 3, 3],
@@ -13,7 +21,8 @@ def call_agent(agents):
             [3, 1, 3, 2, 0]]
     start = [4, 0]
     goal = [3, 1]
-    explored_grid = Grid.make_empty_grid(n, goal)
+    '''
+
     examined_cells = set()
 
     # print(start)
