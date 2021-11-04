@@ -1,4 +1,4 @@
-from probab.utility import *
+from main.utility import *
 from cell import Cell
 import random
 

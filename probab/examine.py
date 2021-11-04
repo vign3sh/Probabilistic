@@ -21,12 +21,15 @@ def examine_first(cell, exp_grid, grid, agent, examined_cells):
     examined_cells.add(cell)
     # to kow the terrain/block
     terrain_type(cell, exp_grid, grid, agent)
+
     i = cell.get_xy()[0]
     j = cell.get_xy()[1]
     oldpg = cell.get_pg()
 
     if cell.get_terrain() == 0:
         cell.set_pg(0)
+        cell.set_terrain(0)
+        cell.set_pf(0)
         change = oldpg
         change_prob(exp_grid, cell, change, oldpg, agent)
         return "block", cell
@@ -40,6 +43,7 @@ def examine_first(cell, exp_grid, grid, agent, examined_cells):
 
 
 def terrain_type(cell, exp_grid, grid, agent):
+
     x, y = cell.get_xy()
     if grid[x][y] == Block_Terrain:
         exp_grid[x][y].set_terrain(Block_Terrain)
@@ -63,7 +67,12 @@ def change_prob(exp_grid, cell, change, pxy, agent) -> Cell:
 
     :rtype: Cell
     """
-    maxProb = cell.get_pg()
+    maxProb = 0
+    if agent == 6:
+        maxProb = cell.get_pg()
+    if agent == 7:
+        maxProb = cell.get_pfg()
+
     maxCell = [cell]
 
     for i in range(len(exp_grid)):
@@ -72,6 +81,7 @@ def change_prob(exp_grid, cell, change, pxy, agent) -> Cell:
                 pij = exp_grid[i][j].Pg
                 pij = pij + (pij / (1 - pxy)) * change
                 exp_grid[i][j].set_pg(pij)
+
                 if agent == 6:
                     if pij > maxProb:
                         maxCell.clear()
@@ -83,6 +93,20 @@ def change_prob(exp_grid, cell, change, pxy, agent) -> Cell:
                         maxCell.append(exp_grid[i][j])
 
                     elif pij == maxProb and check_dist(cell, maxCell[-1]) == check_dist(cell, exp_grid[i][j]):
+                        maxCell.append(exp_grid[i][j])
+
+                if agent == 7:
+                    pfg = exp_grid[i][j].get_pfg()
+                    if pfg > maxProb:
+                        maxCell.clear()
+                        maxCell.append(exp_grid[i][j])
+                        maxProb = pfg
+
+                    elif pfg == maxProb and check_dist(cell, maxCell[-1]) > check_dist(cell, exp_grid[i][j]):
+                        maxCell.clear()
+                        maxCell.append(exp_grid[i][j])
+
+                    elif pfg == maxProb and check_dist(cell, maxCell[-1]) == check_dist(cell, exp_grid[i][j]):
                         maxCell.append(exp_grid[i][j])
 
     return maxCell[random.randint(0, len(maxCell)-1)]

@@ -30,6 +30,17 @@ def print_cell_type(g, n):
         print()
 
 
+def print_pf(g, n):
+    for i in range(n):
+        for j in range(n):
+            if g[i][j].get_target():
+                print('(', g[i][j].get_pf(), ',Target) ', end='')
+            else:
+                print(g[i][j].get_pf(), ' ', end='')
+        print()
+
+
+
 def check_distance(cell, current_cell, max_cell):
     #Return more than zero if current cell is closer than max cell
     dist1 = 0
@@ -48,6 +59,7 @@ def check_dist(a, b):
 def check_goal(cell):
     val = random.uniform(0, 1)
     if cell.get_target():
+        print('Goal ', val, 'is less than', cell.get_pf())
         if val < cell.get_pf():
             return True
     return False
