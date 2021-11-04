@@ -37,7 +37,7 @@ class Agent:
 
             # No path from start to probable goal
             if len(path) == 0:
-                print("No path found")
+                # print("No path found")
                 goal_cell.set_pg(0)
                 # final_path = []
                 # return final_path

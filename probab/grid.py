@@ -1,5 +1,5 @@
 import random
-from cell import Cell
+from probab.cell import Cell
 
 start = []
 goal = []

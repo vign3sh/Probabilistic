@@ -1,11 +1,11 @@
-from grid import *
+from probab.grid import *
 from probab.astar import *
 from probab.examine import *
 from probab.utility import *
 from agents.agent import *
 
 
-def call_agent(agents):
+def call_agent(agents, n):
     while True:
         grid, start, goal = make_grid(n)
         explored_grid = make_empty_grid(n, goal)
@@ -48,7 +48,8 @@ def call_agent(agents):
 # step 2: pass the goal state to a-star and get path
 # step 3: agent follows path till block or till goal changes and get new goal
 
-
+'''
 n = GLOBAL_BIG_MAZE_SIZE
 agent = [6]
-call_agent(agent)
+call_agent(agent, n)
+'''

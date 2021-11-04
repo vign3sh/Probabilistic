@@ -1,5 +1,5 @@
 import heapq as heap
-from cell import Cell
+from probab.cell import Cell
 from probab.utility import *
 from constants.constants import *
 
