@@ -9,16 +9,16 @@ def a_star(grid, start_state, end_state):
     setattr(Cell, "__lt__", lambda self, other: check_dist(self, end_state) <= check_dist(other, end_state))
     heap.heappush(priority_queue, start_state)
     closed_list = set()
-    queue = list()
+    path = list()
 
     while len(priority_queue) > 0:
         # print_list(priority_queue)
         current_state = heap.heappop(priority_queue)
         closed_list.add(current_state)
-        queue.append(current_state)
+        path.append(current_state)
         if current_state == end_state:
             # print(current_state.x, " Goal ", current_state.y )
-            return queue
+            return path
 
         children = get_neighbor(current_state, grid)
 
@@ -30,12 +30,12 @@ def a_star(grid, start_state, end_state):
             if child.get_terrain() == Block_Terrain or child in closed_list:
                 continue
 
-            old_state = get_element_from_list(priority_queue, child)
+            old_state_idx = get_element_from_list(priority_queue, child)
 
-            if old_state is None:
+            if old_state_idx is None:
                 heap.heappush(priority_queue, child)
-            elif closer_from_start(old_state, child, start_state):
-                update_with_child(priority_queue, child, old_state)
+            elif closer_from_start(old_state_idx, child, start_state):
+                update_with_child(priority_queue, child, old_state_idx)
     return []
 
 

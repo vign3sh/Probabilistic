@@ -14,7 +14,7 @@ def print_grid(g, n, goal):
     for i in range(n):
         for j in range(n):
             if i == goal[0] and j == goal[1]:
-                print('(', g[i][j], ',Target) ', end='')
+                print('(', g[i][j], ',*) ', end='')
             else:
                 print(g[i][j], ' ', end='')
         print()

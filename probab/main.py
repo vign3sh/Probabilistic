@@ -10,7 +10,6 @@ def call_agent(agents, n):
         grid, start, goal = make_grid(n)
         explored_grid = make_empty_grid(n, goal)
         start_cell = explored_grid[start[0]][start[1]]
-        print(start, goal)
         goal_cell = explored_grid[goal[0]][goal[1]]
         if len(a_star(explored_grid, start_cell, goal_cell)) > 0:
             break
@@ -26,10 +25,9 @@ def call_agent(agents, n):
     explored_grid = make_empty_grid(n, goal)
     '''
 
-
-    # print(start)
+    print(start, goal)
     print_grid(grid, n, goal)
-    print_ex_grid(explored_grid, n)
+    # print_ex_grid(explored_grid, n)
     start_cell = explored_grid[start[0]][start[1]]
 
     for i in agents:

@@ -4,14 +4,13 @@ from probab.utility import *
 
 
 # Call directly whe cell-terrain is already determined
-def examine(cell, exp_grid, grid, agent):
+def examine(cell, exp_grid, agent):
     i, j = cell.get_xy()
     check = check_goal(cell)
     if check:
         return "goal", cell
     oldpg = cell.get_pg()
-    change = cell.get_pf() * oldpg
-    cell.set_pg(oldpg - change)
+    cell.set_pg(oldpg * (1 - cell.get_pf()))
     # return "continue", change_prob(exp_grid, cell, change, oldpg, agent)
     return "continue", update_prob(exp_grid, cell, oldpg, agent)
 
@@ -22,8 +21,7 @@ def examine_first(cell, exp_grid, grid, agent, examined_cells):
     # to kow the terrain/block
     terrain_type(cell, exp_grid, grid, agent)
 
-    i = cell.get_xy()[0]
-    j = cell.get_xy()[1]
+    i, j = cell.get_xy()
     oldpg = cell.get_pg()
 
     if cell.get_terrain() == 0:
@@ -41,7 +39,7 @@ def examine_first(cell, exp_grid, grid, agent, examined_cells):
         # change_prob(exp_grid, cell, change, oldpg, agent)
         update_prob(exp_grid, cell, oldpg, agent)
         # print(cell.get_pg())
-        return examine(exp_grid[i][j], exp_grid, grid, agent)
+        return examine(exp_grid[i][j], exp_grid, agent)
 
 
 def terrain_type(cell, exp_grid, grid, agent):
@@ -114,6 +112,7 @@ def change_prob(exp_grid, cell, change, pxy, agent) -> Cell:
     return maxCell[random.randint(0, len(maxCell)-1)]
 
 
+# Translate change of probability to all the neighbors
 def update_prob(exp_grid, cell, oldpg, agent):
 
     max_prob6 = cell.get_pg()

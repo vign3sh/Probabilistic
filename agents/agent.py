@@ -10,11 +10,10 @@ class Agent:
     def agent(self, start_cell, explored_grid, grid, n, examined_cells):
         final_path = [start_cell]
         while True:
-            path = []
             if start_cell not in examined_cells:
                 next_step, goal_cell = examine_first(start_cell, explored_grid, grid, self.type, examined_cells)
             else:
-                next_step, goal_cell = examine(start_cell, explored_grid, grid, self.type)
+                next_step, goal_cell = examine(start_cell, explored_grid, self.type)
 
             # Goal Found
 
@@ -35,13 +34,12 @@ class Agent:
 
             path = a_star(explored_grid, start_cell, goal_cell)
 
-            # No path from start to probable goal that means probable goal is not goal
-
+            # No path from start to probable goal that means probable goal is not the goal
             if len(path) == 0:
                 # print("No path found")
                 oldpg = goal_cell.get_pg()
                 goal_cell.set_pg(0)
-                change_prob(explored_grid, goal_cell, oldpg, oldpg, self.type)
+                update_prob(explored_grid, goal_cell, oldpg, self.type)
                 # final_path = []
                 # return final_path
                 continue
@@ -51,7 +49,7 @@ class Agent:
                 if cell not in examined_cells:
                     next_step, max_cell = examine_first(cell, explored_grid, grid, self.type, examined_cells)
                 else:
-                    next_step, max_cell = examine(cell, explored_grid, grid, self.type)
+                    next_step, max_cell = examine(cell, explored_grid, self.type)
 
                 # Goal Found Exit Agent
                 if next_step == 'goal':
@@ -61,6 +59,7 @@ class Agent:
                 # Block Found Start Cell changed to it's parent
                 elif next_step == 'block':
                     # print('Blocked  :', cell.get_xy())
+                    # path[i-1] is examined and we are reexamining at start state again
                     start_cell = path[i-1]
                     # goal_cell = start_cell
                     break
