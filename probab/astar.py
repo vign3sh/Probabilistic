@@ -4,27 +4,6 @@ from probab.utility import *
 from constants.constants import *
 
 
-def repeated_astar(grid, start_state, end_state, agent):
-    final_path = []
-    while True:
-        # print(explored_grid)
-        path = a_star(grid, start_state, end_state)
-
-        # unable  to solve the maze
-        if len(path) == 0:
-            print("No path found")
-            final_path = []
-            return final_path
-
-        if path[len(path) - 1] == end_state:
-            # to be implemented
-            # final_state = agent.follow_path(grid, path)
-            add_to_final_path(final_path, final_state, path)
-            if final_state == end_state:
-                return final_path
-            start_state = final_state       
-
-
 def a_star(grid, start_state, end_state):
     priority_queue = []
     setattr(Cell, "__lt__", lambda self, other: check_dist(self, end_state) <= check_dist(other, end_state))

@@ -35,10 +35,13 @@ class Agent:
 
             path = a_star(explored_grid, start_cell, goal_cell)
 
-            # No path from start to probable goal
+            # No path from start to probable goal that means probable goal is not goal
+
             if len(path) == 0:
                 # print("No path found")
+                oldpg = goal_cell.get_pg()
                 goal_cell.set_pg(0)
+                change_prob(explored_grid, goal_cell, oldpg, oldpg, self.type)
                 # final_path = []
                 # return final_path
                 continue
@@ -59,9 +62,7 @@ class Agent:
                 elif next_step == 'block':
                     # print('Blocked  :', cell.get_xy())
                     start_cell = path[i-1]
-                    goal_cell = start_cell
+                    # goal_cell = start_cell
                     break
-
+                start_cell = cell
                 final_path.append(cell)
-
-            start_cell = goal_cell
