@@ -24,21 +24,24 @@ class Agent:
 
             print(start_cell.get_xy(), '->', goal_cell.get_xy())
 
-            print_cell_type(explored_grid, n)
+            # print_cell_type(explored_grid, n)
             # max_cell = get_max(start_cell, explored_grid, n, i)
             # print(max_cell.get_xy(), start)
 
             # If we have start cell as goal cell examine again
-            if goal_cell.get_xy() == start_cell.get_xy():
+            if goal_cell == start_cell:
+                print("Goal in start cell", goal_cell.get_pg())
+                print_ex_grid(explored_grid, n)
                 continue
 
             reset_astar_param(explored_grid)
             path = a_star(explored_grid, start_cell, goal_cell)
-            # print_full_path(path)
+            print("Path")
+            print_full_path(path)
 
             # No path from start to probable goal that means probable goal is not the goal
             if len(path) == 0:
-                # print("No path found")
+                print("No path found")
                 oldpg = goal_cell.get_pg()
                 goal_cell.set_pg(0)
                 update_prob(explored_grid, goal_cell, oldpg, self.type)
@@ -64,7 +67,7 @@ class Agent:
 
                 # Goal Found Exit Agent
                 elif next_step == 'goal':
-                    add_to_final_path(final_path, start_cell, cell)
+                    final_path.append(cell)
                     return final_path
 
                 start_cell = cell

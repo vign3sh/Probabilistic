@@ -40,9 +40,8 @@ def print_pf(g, n):
         print()
 
 
-
 def check_distance(cell, current_cell, max_cell):
-    #Return more than zero if current cell is closer than max cell
+    # Return more than zero if current cell is closer than max cell
     dist1 = 0
     dist2 = 0
     for i in range(2):
@@ -78,10 +77,6 @@ def find_path(start_state, end_state):
         path.insert(0, temp_state)
         temp_state = temp_state.get_parent()
     return path
-
-
-def add_to_final_path(final_path, start_state, final_state):
-    final_path += find_path(start_state, final_state)
 
 
 def print_full_path(path):
