@@ -7,7 +7,7 @@ forest : terrain = 3
 
 class Cell:
 
-    def __init__(self, x, y, terrain, pf, pg):
+    def __init__(self, x, y, terrain, pf, pg, parent=None):
         self.terrain = terrain
         self.isTarget = False
         # True Positive
@@ -16,6 +16,8 @@ class Cell:
         # self.Pfg = self.Pg * self.Pf
         self.X = x
         self.Y = y
+        self.parent = parent
+        self.gx = 0
 
     def get_xy(self):
         return self.X, self.Y
@@ -56,3 +58,14 @@ class Cell:
     def __hash__(self):
         return hash(str(self.X) + "_" + str(self.Y))
 
+    def get_parent(self):
+        return self.parent
+
+    def set_parent(self, cell):
+        self.parent = cell
+
+    def set_gx(self, gx):
+        self.gx = gx
+
+    def get_gx(self):
+        return self.gx

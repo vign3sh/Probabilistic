@@ -4,7 +4,7 @@ def print_ex_grid(g, n):
     for i in range(n):
         for j in range(n):
             if g[i][j].get_target():
-                print('(', g[i][j].get_pg(), ',Target) ', end='')
+                print('(', g[i][j].get_pg(), ',*) ', end='')
             else:
                 print(g[i][j].get_pg(), ' ', end='')
         print()
@@ -24,7 +24,7 @@ def print_cell_type(g, n):
     for i in range(n):
         for j in range(n):
             if g[i][j].get_target():
-                print('(', g[i][j].get_terrain(), ',Target) ', end='')
+                print('(', g[i][j].get_terrain(), ',*) ', end='')
             else:
                 print(g[i][j].get_terrain(), ' ', end='')
         print()
@@ -68,3 +68,29 @@ def check_goal(cell):
 def print_path(path):
     for state in path:
         print(state.get_xy())
+
+
+def find_path(start_state, end_state):
+    path = []
+    temp_state = end_state
+    print(temp_state.get_xy())
+    while temp_state != start_state:
+        path.insert(0, temp_state)
+        temp_state = temp_state.get_parent()
+    return path
+
+
+def add_to_final_path(final_path, start_state, final_state):
+    final_path += find_path(start_state, final_state)
+
+
+def print_full_path(path):
+    for state in path:
+        print(state.X, "  ", state.Y, " ")
+
+
+def reset_astar_param(grid):
+    for i in range(len(grid)):
+        for j in range(len(grid)):
+            grid[i][j].set_parent(None)
+            grid[i][j].set_gx(0)
