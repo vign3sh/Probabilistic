@@ -43,7 +43,7 @@ def make_empty_grid(n, goal):
     # print(grid)
     for i in range(0, n):
         for j in range(0, n):
-            g[i][j] = Cell(i, j, -1, 0.35, 1 / (n * n))
+            g[i][j] = Cell(i, j, 4, 0.35, 1 / (n * n))
             if i == goal[0] and j == goal[1]:
                 g[i][j].set_target()
 

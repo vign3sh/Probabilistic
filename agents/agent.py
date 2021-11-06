@@ -21,9 +21,9 @@ class Agent:
                 # final_path.append(goal_cell)
                 return final_path
 
-            # print(start_cell.get_xy(), '->', goal_cell.get_xy())
+            print(start_cell.get_xy(), '->', goal_cell.get_xy())
 
-            # print_ex_grid(explored_grid, n)
+            print_cell_type(explored_grid, n)
             # print_cell_type(explored_grid, n)
             # max_cell = get_max(start_cell, explored_grid, n, i)
             # print(max_cell.get_xy(), start)
@@ -46,6 +46,7 @@ class Agent:
 
             for i in range(1, len(path)):
                 cell = path[i]
+                print(cell.get_xy())
                 if cell not in examined_cells:
                     next_step, max_cell = examine_first(cell, explored_grid, grid, self.type, examined_cells)
                 else:

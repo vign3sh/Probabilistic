@@ -1,3 +1,4 @@
+from format import get_grid
 from probab.grid import *
 from probab.astar import *
 from probab.examine import *
@@ -6,7 +7,7 @@ from agents.agent import *
 
 
 def call_agent(agents, n):
-    while True:
+    '''while True:
         grid, start, goal = make_grid(n)
         explored_grid = make_empty_grid(n, goal)
         start_cell = explored_grid[start[0]][start[1]]
@@ -14,16 +15,17 @@ def call_agent(agents, n):
         if len(a_star(explored_grid, start_cell, goal_cell)) > 0:
             break
     '''
-
+    '''
     grid = [[3, 1, 1, 0, 3],
             [2, 3, 0, 1, 0],
             [0, 0, 2, 3, 3],
             [0, 1, 2, 1, 0],
             [3, 1, 3, 2, 0]]
-    start = [4, 0]
-    goal = [3, 1]
-    explored_grid = make_empty_grid(n, goal)
     '''
+    grid = get_grid()
+    start = [3, 22]
+    goal = [5, 5]
+    explored_grid = make_empty_grid(n, goal)
 
     print(start, goal)
     print_grid(grid, n, goal)
@@ -34,10 +36,10 @@ def call_agent(agents, n):
         examined_cells = set()
         agent_element = Agent(i)
         path = agent_element.agent(start_cell, explored_grid, grid, n, examined_cells)
-
         for cell in path:
             print(cell.get_xy(), end=' | ')
         print_ex_grid(explored_grid, n)
+        print(start_cell.get_xy())
         explored_grid = make_empty_grid(n, goal)
         start_cell = explored_grid[start[0]][start[1]]
 
@@ -47,7 +49,7 @@ def call_agent(agents, n):
 # step 1: examine start to get goal state
 # step 2: pass the goal state to a-star and get path
 # step 3: agent follows path till block or till goal changes and get new goal
-'''
+
 agent = [6]
 call_agent(agent, 50)
-'''
+
