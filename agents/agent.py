@@ -30,14 +30,12 @@ class Agent:
 
             # If we have start cell as goal cell examine again
             if goal_cell == start_cell:
-                print("Goal in start cell", goal_cell.get_pg())
-                print_ex_grid(explored_grid, n)
+                # print("Goal in start cell", goal_cell.get_pg())
+                # print_ex_grid(explored_grid, n)
                 continue
 
             reset_astar_param(explored_grid)
             path = a_star(explored_grid, start_cell, goal_cell)
-            print("Path")
-            print_full_path(path)
 
             # No path from start to probable goal that means probable goal is not the goal
             if len(path) == 0:
@@ -49,17 +47,20 @@ class Agent:
                 # return final_path
                 continue
 
-            for i in range(0, len(path)):
+            path.insert(0, start_cell)
+            # print("Path")
+            # print_full_path(path)
+            for i in range(1, len(path)):
                 cell = path[i]
-                print(cell.get_xy())
+                # print(cell.get_xy())
                 if cell not in examined_cells:
                     next_step, max_cell = examine_first(cell, explored_grid, grid, self.type, examined_cells)
                 else:
                     next_step, max_cell = examine(cell, explored_grid, self.type)
-                print(next_step, max_cell.get_xy())
+                # print(next_step, cell.get_xy())
                 # Block Found Start Cell changed to it's parent
                 if next_step == 'block':
-                    print('Blocked  :', cell.get_xy())
+                    # print('Blocked  :', cell.get_xy())
                     # path[i-1] is examined and we are reexamining at start state again
                     start_cell = path[i-1]
                     # goal_cell = start_cell
@@ -69,6 +70,5 @@ class Agent:
                 elif next_step == 'goal':
                     final_path.append(cell)
                     return final_path
-
                 start_cell = cell
                 final_path.append(cell)

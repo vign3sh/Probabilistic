@@ -1,9 +1,6 @@
 import random
 from probab.cell import Cell
 
-start = []
-goal = []
-
 
 def make_grid(n):
     grid = [[0 for i in range(n)] for j in range(n)]
@@ -37,6 +34,17 @@ def make_grid(n):
             break
     return grid, start, goal
 
+
+def make_test_grid(n, goal, grid):
+    g = [[Cell for i in range(n)] for j in range(n)]
+    # print(grid)
+    for i in range(0, n):
+        for j in range(0, n):
+            terr = grid[i][j]
+            g[i][j] = Cell(i, j, terr, 0.35, 1 / (n * n))
+            if i == goal[0] and j == goal[1]:
+                g[i][j].set_target()
+    return g
 
 def make_empty_grid(n, goal):
     g = [[Cell for i in range(n)] for j in range(n)]

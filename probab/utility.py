@@ -12,12 +12,13 @@ def print_ex_grid(g, n):
 
 def print_grid(g, n, goal):
     for i in range(n):
+        print('[', end='')
         for j in range(n):
             if i == goal[0] and j == goal[1]:
-                print('(', g[i][j], ',*) ', end='')
+                print('(', g[i][j], ',*), ', end='')
             else:
-                print(g[i][j], ' ', end='')
-        print()
+                print(g[i][j], ', ', end='')
+        print(']')
 
 
 def print_cell_type(g, n):
@@ -81,7 +82,7 @@ def find_path(start_state, end_state):
 
 def print_full_path(path):
     for state in path:
-        print(state.X, "  ", state.Y, " ")
+        print(state.X, ",", state.Y, end="  ")
 
 
 def reset_astar_param(grid):

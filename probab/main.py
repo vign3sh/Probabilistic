@@ -7,49 +7,53 @@ from agents.agent import *
 
 
 def call_agent(agents, n):
-    '''while True:
-        grid, start, goal = make_grid(n)
-        explored_grid = make_empty_grid(n, goal)
-        start_cell = explored_grid[start[0]][start[1]]
-        goal_cell = explored_grid[goal[0]][goal[1]]
-        if len(a_star(explored_grid, start_cell, goal_cell)) > 0:
-            break
     '''
-    '''
-    grid = [[3, 1, 1, 0, 3],
-            [2, 3, 0, 1, 0],
-            [0, 0, 2, 3, 3],
-            [0, 1, 2, 1, 0],
-            [3, 1, 3, 2, 0]]
-    '''
-    grid = get_grid()
-    start = [3, 22]
-    goal = [5, 5]
-    explored_grid = make_empty_grid(n, goal)
+        grid = get_grid()
+        start = [3, 22]
+        goal = [5, 5]
+        test_grid = make_test_grid(n, goal, grid)
+        start_cell = test_grid[start[0]][start[1]]
+        goal_cell = test_grid[goal[0]][goal[1]]
 
+        if len(path) == 0:
+            print('Not solvable')
+            return
+        else:
+            print_full_path(path)
+        '''
+    while True:
+        grid, start, goal = make_grid(n)
+        test_grid = make_test_grid(n, goal, grid)
+        start_cell = test_grid[start[0]][start[1]]
+        goal_cell = test_grid[goal[0]][goal[1]]
+        path = a_star(test_grid, start_cell, goal_cell)
+        if len(path) > 0:
+            break
+    print('New Grid')
+    print_full_path(path)
+    print()
     print(start, goal)
     print_grid(grid, n, goal)
-    # print_ex_grid(explored_grid, n)
-    start_cell = explored_grid[start[0]][start[1]]
 
     for i in agents:
         examined_cells = set()
+        explored_grid = make_empty_grid(n, goal)
+        start_cell = explored_grid[start[0]][start[1]]
         agent_element = Agent(i)
         path = agent_element.agent(start_cell, explored_grid, grid, n, examined_cells)
         for cell in path:
             print(cell.get_xy(), end=' | ')
-        print_ex_grid(explored_grid, n)
-        print(start_cell.get_xy())
-        explored_grid = make_empty_grid(n, goal)
-        start_cell = explored_grid[start[0]][start[1]]
+        print('End of Search')
+        # print_ex_grid(explored_grid, n)
 
 
-        # print_cell_type(explored_grid, n)
+
+
 
 # step 1: examine start to get goal state
 # step 2: pass the goal state to a-star and get path
 # step 3: agent follows path till block or till goal changes and get new goal
-
+'''
 agent = [6]
 call_agent(agent, 50)
-
+'''
