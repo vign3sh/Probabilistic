@@ -2,14 +2,14 @@ from constants.constants import *
 from probab.main import call_agent
 import time
 
-
-agent = [6]
-total_time = 0
-for i in range(GLOBAL_TEST_COUNT):
-    start = time.perf_counter()
-    call_agent(agent, GLOBAL_BIG_MAZE_SIZE)
-    end = time.perf_counter()
-    total_time += end - start
+no_of_tests = GLOBAL_TEST_COUNT
+agent = [6, 7]
+total_time = [0 for i in range(len(agent))]
+for i in range(no_of_tests):
+    times = call_agent(agent, GLOBAL_BIG_MAZE_SIZE)
+    for j in range(len(times)):
+        print('Grid Number:', i+1, '   Time for agent', j+6, ':', times[j])
+        total_time[j] += times[j]
     print()
-    print('Cell Number:',i,'  Time:', end - start)
-print('Average Time:', total_time/GLOBAL_TEST_COUNT)
+for j in range(len(total_time)):
+    print('Average Time for agent:', j+6, total_time[j]/no_of_tests)

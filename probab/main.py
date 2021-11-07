@@ -4,6 +4,7 @@ from probab.astar import *
 from probab.examine import *
 from probab.utility import *
 from agents.agent import *
+import time
 
 
 def call_agent(agents, n):
@@ -34,8 +35,9 @@ def call_agent(agents, n):
     print()
     print(start, goal)
     print_grid(grid, n, goal)
-
+    t = []
     for i in agents:
+        s = time.perf_counter()
         examined_cells = set()
         explored_grid = make_empty_grid(n, goal)
         start_cell = explored_grid[start[0]][start[1]]
@@ -43,7 +45,14 @@ def call_agent(agents, n):
         path = agent_element.agent(start_cell, explored_grid, grid, n, examined_cells)
         for cell in path:
             print(cell.get_xy(), end=' | ')
-        print('End of Search')
+        print()
+        print('End of Agent ', i)
+        e = time.perf_counter()
+        t.append(e - s)
+
+    print('End')
+    return t
+
         # print_ex_grid(explored_grid, n)
 
 
