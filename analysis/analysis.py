@@ -11,5 +11,5 @@ for i in range(GLOBAL_TEST_COUNT):
     end = time.perf_counter()
     total_time += end - start
     print()
-    print('Time:', end - start)
-print(total_time/GLOBAL_TEST_COUNT)
+    print('Cell Number:',i,'  Time:', end - start)
+print('Average Time:', total_time/GLOBAL_TEST_COUNT)

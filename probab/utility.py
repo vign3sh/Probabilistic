@@ -59,7 +59,7 @@ def check_dist(a, b):
 def check_goal(cell):
     val = random.uniform(0, 1)
     if cell.get_target():
-        print('Goal ', val, 'is less than', cell.get_pf())
+        print('Goal ', val, 'vs', cell.get_pf())
         if val < cell.get_pf():
             return True
     return False

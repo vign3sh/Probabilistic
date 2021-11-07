@@ -22,7 +22,7 @@ class Agent:
                 # final_path.append(goal_cell)
                 return final_path
 
-            print(start_cell.get_xy(), '->', goal_cell.get_xy())
+            # print(start_cell.get_xy(), '->', goal_cell.get_xy())
 
             # print_cell_type(explored_grid, n)
             # max_cell = get_max(start_cell, explored_grid, n, i)
