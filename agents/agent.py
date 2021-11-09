@@ -22,7 +22,7 @@ class Agent:
                 # final_path.append(goal_cell)
                 return final_path
 
-            # print(start_cell.get_xy(), '->', goal_cell.get_xy())
+            print(start_cell.get_xy(), '->', goal_cell.get_xy())
 
             # print_cell_type(explored_grid, n)
             # max_cell = get_max(start_cell, explored_grid, n, i)
@@ -31,7 +31,6 @@ class Agent:
             # If we have start cell as goal cell examine again
             if goal_cell == start_cell:
                 # print("Goal in start cell", goal_cell.get_pg())
-                # print_ex_grid(explored_grid, n)
                 continue
 
             reset_astar_param(explored_grid)
@@ -72,3 +71,7 @@ class Agent:
                     return final_path
                 start_cell = cell
                 final_path.append(cell)
+                '''if max_cell.get_xy() != goal_cell.get_xy():
+                    break'''
+
+
