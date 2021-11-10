@@ -1,3 +1,5 @@
+import sys
+
 from constants.constants import *
 from probab.cell import Cell
 from probab.utility import *
@@ -122,7 +124,9 @@ def update_prob(exp_grid, cell, oldpg, agent):
 
     # ratio of (1-new p of current cell) / (1-old p of current cell)
     ratio = (1 - cell.get_pg())/(1 - oldpg)
-
+    print(ratio)
+    if ratio == 1.0:
+        sys.exit(0)
     for i in range(len(exp_grid)):
         for j in range(len(exp_grid)):
             if not ((i, j) == cell.get_xy()):
@@ -156,7 +160,8 @@ def update_prob(exp_grid, cell, oldpg, agent):
 
                     elif pfg == max_prob7 and check_dist(cell, maxCell[-1]) == check_dist(cell, exp_grid[i][j]):
                         maxCell.append(exp_grid[i][j])
-
+    for c in maxCell:
+        print(c.get_xy())
     return maxCell[random.randint(0, len(maxCell) - 1)]
 
 
