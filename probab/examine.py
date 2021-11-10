@@ -1,7 +1,7 @@
 from constants.constants import *
 from probab.cell import Cell
 from probab.utility import *
-
+import sys
 
 # Call directly whe cell-terrain is already determined
 def examine(cell, exp_grid, agent):
@@ -122,7 +122,12 @@ def update_prob(exp_grid, cell, oldpg, agent):
 
     # ratio of (1-new p of current cell) / (1-old p of current cell)
     ratio = (1 - cell.get_pg())/(1 - oldpg)
-
+    '''
+    if ratio == 1.0:
+        print(ratio, ' It is 1  ',  cell.get_xy(),  oldpg, 'vs', cell.get_pg())
+    else:
+        print(ratio, cell.get_xy())
+        '''
     for i in range(len(exp_grid)):
         for j in range(len(exp_grid)):
             if not ((i, j) == cell.get_xy()):

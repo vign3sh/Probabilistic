@@ -10,8 +10,8 @@ import time
 def call_agent(agents, n):
 
     grid = get_grid()
-    start = [3, 22]
-    goal = [5, 5]
+    start = [30, 6]
+    goal = [36, 4]
     test_grid = make_test_grid(n, goal, grid)
     start_cell = test_grid[start[0]][start[1]]
     goal_cell = test_grid[goal[0]][goal[1]]
@@ -36,6 +36,7 @@ def call_agent(agents, n):
     print()
     '''
 
+
     print(start, goal)
     print_grid(grid, n, goal)
     t = []
@@ -54,7 +55,7 @@ def call_agent(agents, n):
         t.append(e - s)
 
     print('End')
-    return t
+    return t, goal_cell
 
         # print_ex_grid(explored_grid, n)
 # step 1: examine start to get goal state
@@ -63,6 +64,6 @@ def call_agent(agents, n):
 
 
 agent = [6, 7]
-times = call_agent(agent, GLOBAL_BIG_MAZE_SIZE)
+times, _ = call_agent(agent, GLOBAL_BIG_MAZE_SIZE)
 for j in range(len(times)):
     print('Time for agent', j+6, ':', times[j])
