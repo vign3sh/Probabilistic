@@ -55,7 +55,6 @@ class Agent:
             # print_full_path(path)
             for i in range(1, len(path)):
                 cell = path[i]
-                print("In for", cell.get_xy())
                 if cell not in examined_cells:
                     next_step, max_cell = examine_first(cell, explored_grid, grid, self.type, examined_cells)
                 else:
@@ -76,14 +75,16 @@ class Agent:
 
                 start_cell = cell
                 final_path.append(cell)
-
-                '''
-                if self.type == 6 and max_cell.get_pg() > goal_cell.get_pg():
-                    break
-
-                if self.type == 7 and max_cell.get_pfg() > goal_cell.get_pfg():
-                    break
-                '''
-
             goal_cell = max_cell
+
+
+'''
+                if self.type == 6:
+                    if max_cell.get_pg() > goal_cell.get_pg() or (max_cell.get_pg() == goal_cell.get_pg() and check_dist(cell, max_cell) < check_dist(cell, goal_cell)):
+                        break
+
+                if self.type == 7:
+                    if max_cell.get_pfg() > goal_cell.get_pfg() or (max_cell.get_pfg() == goal_cell.get_pfg() and check_dist(cell, max_cell) < check_dist(cell, goal_cell)):
+                        break
+'''
 

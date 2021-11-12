@@ -36,10 +36,10 @@ def examine_first(cell, exp_grid, grid, agent, examined_cells):
         return "block", update_prob(exp_grid, cell, oldpg, agent)
 
     else:
-        cell.set_pg(oldpg / 0.7)
-        change = oldpg - cell.get_pg()
+        # cell.set_pg(oldpg / 0.7)
+        # change = oldpg - cell.get_pg()
         # change_prob(exp_grid, cell, change, oldpg, agent)
-        update_prob(exp_grid, cell, oldpg, agent)
+        # update_prob(exp_grid, cell, oldpg, agent)
         # print(cell.get_pg())
         return examine(exp_grid[i][j], exp_grid, agent)
 
@@ -64,6 +64,55 @@ def terrain_type(cell, exp_grid, grid, agent):
         exp_grid[x][y].set_pf(0.2)
 
 
+# Translate change of probability to all the neighbors
+def update_prob(exp_grid, cell, oldpg, agent):
+
+    max_prob6 = cell.get_pg()
+    max_prob7 = cell.get_pfg()
+
+    maxCell = [cell]
+
+    # ratio of (1-new p of current cell) / (1-old p of current cell)
+    ratio = (1 - cell.get_pg())/(1 - oldpg)
+
+    for i in range(len(exp_grid)):
+        for j in range(len(exp_grid)):
+            if not ((i, j) == cell.get_xy()):
+                pij = exp_grid[i][j].get_pg()
+                pij = pij * ratio
+                exp_grid[i][j].set_pg(pij)
+
+                if agent == 6:
+                    if pij > max_prob6:
+                        maxCell.clear()
+                        maxCell.append(exp_grid[i][j])
+                        max_prob6 = pij
+
+                    elif pij == max_prob6 and check_dist(cell, maxCell[-1]) > check_dist(cell, exp_grid[i][j]):
+                        maxCell.clear()
+                        maxCell.append(exp_grid[i][j])
+
+                    elif pij == max_prob6 and check_dist(cell, maxCell[-1]) == check_dist(cell, exp_grid[i][j]):
+                        maxCell.append(exp_grid[i][j])
+
+                if agent == 7:
+                    pfg = exp_grid[i][j].get_pfg()
+                    if pfg > max_prob7:
+                        maxCell.clear()
+                        maxCell.append(exp_grid[i][j])
+                        max_prob7 = pfg
+
+                    elif pfg == max_prob7 and check_dist(cell, maxCell[-1]) > check_dist(cell, exp_grid[i][j]):
+                        maxCell.clear()
+                        maxCell.append(exp_grid[i][j])
+
+                    elif pfg == max_prob7 and check_dist(cell, maxCell[-1]) == check_dist(cell, exp_grid[i][j]):
+                        maxCell.append(exp_grid[i][j])
+    for c in maxCell:
+        print(c.get_xy())
+    return maxCell[random.randint(0, len(maxCell) - 1)]
+
+'''
 def change_prob(exp_grid, cell, change, pxy, agent) -> Cell:
     """
 
@@ -112,57 +161,6 @@ def change_prob(exp_grid, cell, change, pxy, agent) -> Cell:
                         maxCell.append(exp_grid[i][j])
 
     return maxCell[random.randint(0, len(maxCell)-1)]
-
-
-# Translate change of probability to all the neighbors
-def update_prob(exp_grid, cell, oldpg, agent):
-
-    max_prob6 = cell.get_pg()
-    max_prob7 = cell.get_pfg()
-
-    maxCell = [cell]
-
-    # ratio of (1-new p of current cell) / (1-old p of current cell)
-    ratio = (1 - cell.get_pg())/(1 - oldpg)
-    print(ratio)
-    if ratio == 1.0:
-        sys.exit(0)
-    for i in range(len(exp_grid)):
-        for j in range(len(exp_grid)):
-            if not ((i, j) == cell.get_xy()):
-                pij = exp_grid[i][j].get_pg()
-                pij = pij * ratio
-                exp_grid[i][j].set_pg(pij)
-
-                if agent == 6:
-                    if pij > max_prob6:
-                        maxCell.clear()
-                        maxCell.append(exp_grid[i][j])
-                        max_prob6 = pij
-
-                    elif pij == max_prob6 and check_dist(cell, maxCell[-1]) > check_dist(cell, exp_grid[i][j]):
-                        maxCell.clear()
-                        maxCell.append(exp_grid[i][j])
-
-                    elif pij == max_prob6 and check_dist(cell, maxCell[-1]) == check_dist(cell, exp_grid[i][j]):
-                        maxCell.append(exp_grid[i][j])
-
-                if agent == 7:
-                    pfg = exp_grid[i][j].get_pfg()
-                    if pfg > max_prob7:
-                        maxCell.clear()
-                        maxCell.append(exp_grid[i][j])
-                        max_prob7 = pfg
-
-                    elif pfg == max_prob7 and check_dist(cell, maxCell[-1]) > check_dist(cell, exp_grid[i][j]):
-                        maxCell.clear()
-                        maxCell.append(exp_grid[i][j])
-
-                    elif pfg == max_prob7 and check_dist(cell, maxCell[-1]) == check_dist(cell, exp_grid[i][j]):
-                        maxCell.append(exp_grid[i][j])
-    for c in maxCell:
-        print(c.get_xy())
-    return maxCell[random.randint(0, len(maxCell) - 1)]
-
+'''
 
 
