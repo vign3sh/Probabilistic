@@ -75,6 +75,19 @@ class Agent:
 
                 start_cell = cell
                 final_path.append(cell)
+                if self.type == 6:
+                    if max_cell.get_pg() > goal_cell.get_pg() or (
+                            max_cell.get_pg() == goal_cell.get_pg() and check_dist(cell, max_cell) < check_dist(cell,
+                                                                                                                goal_cell)):
+                        print(cell.get_xy(), ' ', goal_cell.get_xy(), ' ', max_cell.get_xy())
+                        break
+
+                if self.type == 7:
+                    if max_cell.get_pfg() > goal_cell.get_pfg() or (
+                            max_cell.get_pfg() == goal_cell.get_pfg() and check_dist(cell, max_cell) < check_dist(cell,
+                                                                                                                  goal_cell)):
+                        print(cell.get_xy(), ' ',  goal_cell.get_xy(), ' ', max_cell.get_xy())
+                        break
             goal_cell = max_cell
 
 

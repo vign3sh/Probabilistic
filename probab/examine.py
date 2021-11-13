@@ -108,8 +108,7 @@ def update_prob(exp_grid, cell, oldpg, agent):
 
                     elif pfg == max_prob7 and check_dist(cell, maxCell[-1]) == check_dist(cell, exp_grid[i][j]):
                         maxCell.append(exp_grid[i][j])
-    for c in maxCell:
-        print(c.get_xy())
+
     return maxCell[random.randint(0, len(maxCell) - 1)]
 
 '''
