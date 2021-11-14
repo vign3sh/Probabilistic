@@ -8,7 +8,7 @@ import time
 
 
 def call_agent(agents, n):
-
+    '''
     grid = get_grid()
     start = [30, 6]
     goal = [36, 4]
@@ -23,6 +23,7 @@ def call_agent(agents, n):
         print_full_path(path)
         print()
     '''
+
     while True:
         grid, start, goal = make_grid(n)
         test_grid = make_test_grid(n, goal, grid)
@@ -34,7 +35,7 @@ def call_agent(agents, n):
     print('New Grid')
     print_full_path(path)
     print()
-    '''
+
 
 
     print(start, goal)
@@ -58,12 +59,20 @@ def call_agent(agents, n):
     return t, goal_cell
 
         # print_ex_grid(explored_grid, n)
-# step 1: examine start to get goal state
-# step 2: pass the goal state to a-star and get path
-# step 3: agent follows path till block or till goal changes and get new goal
+
+# step 1: check for block of start , examine start->check for goal
+# step 2: while true
+# step 3: if goal found end
+# step 4 : if goal == start rexamine start
+# step 5 : find path
+# step 6 : if path not found set max's probablity of goal to zero
+# step 7: travel path in for
+# step 8 : block found set end for
+# step 9 : goal found end func
+# step 10 : check for changed max
 
 
 agent = [6, 7]
-times, _ = call_agent(agent, GLOBAL_BIG_MAZE_SIZE)
+times, _ = call_agent(agent, 5)
 for j in range(len(times)):
     print('Time for agent', j+6, ':', times[j])

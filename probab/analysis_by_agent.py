@@ -11,7 +11,7 @@ flat_count = 0
 hill_count = 0
 forest_count = 0
 for i in range(no_of_tests):
-    times, goal_cell = call_agent(agent, GLOBAL_BIG_MAZE_SIZE)
+    times, goal_cell = call_agent(agent, GLOBAL_MED_MAZE_SIZE)
     for j in range(len(times)):
         print('Grid Number:', i+1, '   Time for agent', j+6, ':', times[j])
         if goal_cell.terrain == Flat_Terrain:
