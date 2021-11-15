@@ -1,18 +1,17 @@
 from probab.utility import *
-from cell import Cell
 import random
+from probab.cell import Cell
 
 
-def get_max(cell, exp_grid, agent):
-
+def get_max(cell, exp_grid, agent, closed_list=None):
     maxProb6 = cell.get_pg()
     maxProb7 = cell.get_pfg()
     maxCell = [cell]
     l = len(exp_grid)
     for i in range(0, l):
         for j in range(0, l):
-            pij = exp_grid[i][j].get_pg()
             if agent == 6:
+                pij = exp_grid[i][j].get_pg()
                 if pij > maxProb6:
                     maxCell.clear()
                     maxCell.append(exp_grid[i][j])

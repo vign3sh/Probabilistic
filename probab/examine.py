@@ -4,7 +4,6 @@ from probab.utility import *
 
 # Call directly whe cell-terrain is already determined
 def examine(cell, exp_grid, agent):
-    i, j = cell.get_xy()
     if check_goal(cell):
         return True
     oldpg = cell.get_pg()
@@ -36,7 +35,7 @@ def get_terrain_type(cell, exp_grid, grid, agent, examined_cells):
     return grid[x][y]
 
 
-def update_block_prob(cell, exp_grid, agent):
+def update_block_prob(cell, exp_grid):
     oldpg = cell.get_pg()
     cell.set_pg(0)
 
