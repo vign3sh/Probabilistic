@@ -8,10 +8,12 @@ import time
 
 
 def call_agent(agents, n):
-
+    '''
     grid = get_grid()
     start = [1, 7]
     goal = [7, 0]
+    # start = [1, 0]
+    # goal  = [2, 4]
     test_grid = make_test_grid(n, goal, grid)
     start_cell = test_grid[start[0]][start[1]]
     goal_cell = test_grid[goal[0]][goal[1]]
@@ -35,10 +37,10 @@ def call_agent(agents, n):
     print('New Grid')
     print_full_path(path)
     print()
-    '''
 
     print(start, goal)
     print_grid(grid, n, goal)
+
     t = []
     examinations = [0 for i in range(len(agents))]
     movements = [0 for i in range(len(agents))]
@@ -48,12 +50,14 @@ def call_agent(agents, n):
         explored_grid = make_empty_grid(n, goal)
         start_cell = explored_grid[start[0]][start[1]]
         agent_element = Agent(i)
+        print_ex_grid(explored_grid, n)
         path = agent_element.agent(start_cell, explored_grid, grid, n, examined_cells)
         movements[i - 6] += len(path)
         examinations[i - 6] += agent_element.get_examinations()
         for cell in path:
             print(cell.get_xy(), end=' | ')
         print()
+        print(len(path))
         print('End of Agent ', i)
         e = time.perf_counter()
         t.append(e - s)
@@ -74,8 +78,10 @@ def call_agent(agents, n):
 # step 9 : goal found end func
 # step 10 : check for changed max
 
-
+'''
 agent = [6, 7]
 times, _, a, b = call_agent(agent, 10)
 for j in range(len(times)):
     print('Time for agent', j+6, ':', times[j])
+    print('Ratio:', a[j]/b[j])
+'''

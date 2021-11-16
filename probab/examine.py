@@ -3,13 +3,20 @@ from probab.utility import *
 
 
 # Call directly whe cell-terrain is already determined
-def examine(cell, exp_grid, agent):
+def examine(cell, exp_grid, agent, goal_count):
     if check_goal(cell):
         return True
+    elif cell.get_terrain() == Flat_Terrain and goal_count >= 2:
+        return True
+    elif cell.get_terrain() == Hill_Terrain  and goal_count >= 5:
+        return True
+    elif cell.get_terrain() == Forest_Terrain  and goal_count >= 8:
+        return True
     oldpg = cell.get_pg()
-    cell.set_pg(oldpg * cell.get_pf()/((1-oldpg)+ oldpg*cell.get_pf()))
+    denom = ((1-oldpg)+ oldpg*cell.get_pf())
+    cell.set_pg(oldpg * cell.get_pf()/ denom)
     # return "continue", change_prob(exp_grid, cell, change, oldpg, agent)
-    update_prob(exp_grid, cell, oldpg, agent)
+    update_prob(exp_grid, cell, denom)
     return False
 
 
@@ -48,12 +55,12 @@ def update_block_prob(cell, exp_grid):
 
 
 # Translate change of probability to all the neighbors
-def update_prob(exp_grid, cell, oldpg, agent):
+def update_prob(exp_grid, cell, denom):
     for i in range(len(exp_grid)):
         for j in range(len(exp_grid)):
             if not ((i, j) == cell.get_xy()):
                 pij = exp_grid[i][j].get_pg()
-                exp_grid[i][j].set_pg(pij/((1 - oldpg) + oldpg * cell.get_pf()))
+                exp_grid[i][j].set_pg(pij/denom)
 
 
 

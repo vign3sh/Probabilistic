@@ -1,4 +1,14 @@
 import random
+def print_grid(g, n, goal):
+    for i in range(n):
+        print('[', end='')
+        for j in range(n):
+            if i == goal[0] and j == goal[1]:
+                print('(', g[i][j], ',*), ', end='')
+            else:
+                print(g[i][j], ', ', end='')
+        print(']')
+
 
 def print_ex_grid(g, n):
     for i in range(n):
@@ -10,16 +20,14 @@ def print_ex_grid(g, n):
         print()
 
 
-def print_grid(g, n, goal):
+def print_pfg(g, n):
     for i in range(n):
-        print('[', end='')
         for j in range(n):
-            if i == goal[0] and j == goal[1]:
-                print('(', g[i][j], ',*), ', end='')
+            if g[i][j].get_target():
+                print('(', "%.6f" %g[i][j].get_pfg(), ',*) ', end='')
             else:
-                print(g[i][j], ', ', end='')
-        print(']')
-
+                print("%.6f" %g[i][j].get_pfg(), ' ', end='')
+        print()
 
 def print_cell_type(g, n):
     for i in range(n):
@@ -59,8 +67,8 @@ def check_dist(a, b):
 def check_goal(cell):
     val = random.uniform(0, 1)
     if cell.get_target():
-        print('Goal ', val, 'vs', cell.get_pf())
-        if val < cell.get_pf():
+        print('Goal ',  cell.get_pf(), 'vs', val)
+        if val > cell.get_pf():
             return True
     return False
 
@@ -82,7 +90,7 @@ def find_path(start_state, end_state):
 
 def print_full_path(path):
     for state in path:
-        print(state.X, ",", state.Y, end="  ")
+        print(state.X, ",", state.Y, end="||")
 
 
 def reset_astar_param(grid):
@@ -90,3 +98,13 @@ def reset_astar_param(grid):
         for j in range(len(grid)):
             grid[i][j].set_parent(None)
             grid[i][j].set_gx(0)
+
+
+def check_sum(grid):
+    sum = 0
+    for i in range(len(grid)):
+        for j in range(len(grid)):
+            sum += grid[i][j].get_pg()
+
+    return float("{:.1f}".format(sum))
+
