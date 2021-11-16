@@ -9,6 +9,8 @@ class Agent:
     def __init__(self, number):
         self.type = number
         self.examinations = 0
+        self.counter = 0
+        self.total = 0
 
     def agent(self, start_cell, explored_grid, grid, n, examined_cells):
         final_path = [start_cell]
@@ -39,6 +41,8 @@ class Agent:
 
             reset_astar_param(explored_grid)
             path = a_star(explored_grid, start_cell, goal_cell)
+            self.counter += 1
+            self.total += len(path)
 
             # No path from start to probable goal that means probable goal is not the goal
             if len(path) == 0:
@@ -89,4 +93,5 @@ class Agent:
     def get_examinations(self):
         return self.examinations
 
-
+    def avg_astar_len(self):
+        return self.total/ self.counter

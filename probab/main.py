@@ -8,7 +8,7 @@ import time
 
 
 def call_agent(agents, n):
-
+    '''
     grid = get_grid()
     start = [1, 7]
     goal = [7, 0]
@@ -35,13 +35,13 @@ def call_agent(agents, n):
     print('New Grid')
     print_full_path(path)
     print()
-    '''
 
     print(start, goal)
     print_grid(grid, n, goal)
     t = []
     examinations = [0 for i in range(len(agents))]
     movements = [0 for i in range(len(agents))]
+    tot_astar_len = [0 for i in range(len(agents))]
     for i in agents:
         s = time.perf_counter()
         examined_cells = set()
@@ -51,6 +51,7 @@ def call_agent(agents, n):
         path = agent_element.agent(start_cell, explored_grid, grid, n, examined_cells)
         movements[i - 6] += len(path)
         examinations[i - 6] += agent_element.get_examinations()
+        tot_astar_len[i-6] += agent_element.avg_astar_len()
         for cell in path:
             print(cell.get_xy(), end=' | ')
         print()
@@ -59,7 +60,7 @@ def call_agent(agents, n):
         t.append(e - s)
 
     print('End')
-    return t, goal_cell, movements, examinations
+    return t, goal_cell, movements, examinations, tot_astar_len
 
         # print_ex_grid(explored_grid, n)
 
@@ -74,8 +75,9 @@ def call_agent(agents, n):
 # step 9 : goal found end func
 # step 10 : check for changed max
 
-
+'''
 agent = [6, 7]
-times, _, a, b = call_agent(agent, 10)
+times, _, a, b,c = call_agent(agent, 10)
 for j in range(len(times)):
     print('Time for agent', j+6, ':', times[j])
+'''
