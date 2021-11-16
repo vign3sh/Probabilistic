@@ -66,6 +66,6 @@ def call_agent(n, threshold=None):
 
 
 agent = [6, 7]
-times, _, a, b = call_agent(agent, 10)
+times, _, a, b = call_agent(10)
 for j in range(len(times)):
     print('Time for agent', j+6, ':', times[j])
