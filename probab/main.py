@@ -8,7 +8,7 @@ import time
 
 
 def call_agent(agents, n):
-
+    '''
     grid = get_grid()
     start = [30, 6]
     goal = [36, 4]
@@ -34,12 +34,13 @@ def call_agent(agents, n):
     print('New Grid')
     print_full_path(path)
     print()
-    '''
 
 
     print(start, goal)
     print_grid(grid, n, goal)
     t = []
+    examinations = [0 for i in range(len(agents))]
+    movements = [0 for i in range(len(agents))]
     for i in agents:
         s = time.perf_counter()
         examined_cells = set()
@@ -47,6 +48,8 @@ def call_agent(agents, n):
         start_cell = explored_grid[start[0]][start[1]]
         agent_element = Agent(i)
         path = agent_element.agent(start_cell, explored_grid, grid, n, examined_cells)
+        movements[i - 6] += len(path)
+        examinations[i - 6] += agent_element.get_examinations()
         for cell in path:
             print(cell.get_xy(), end=' | ')
         print()
@@ -55,15 +58,16 @@ def call_agent(agents, n):
         t.append(e - s)
 
     print('End')
-    return t, goal_cell
+    return t, goal_cell, movements, examinations
 
         # print_ex_grid(explored_grid, n)
 # step 1: examine start to get goal state
 # step 2: pass the goal state to a-star and get path
 # step 3: agent follows path till block or till goal changes and get new goal
 
-
+'''
 agent = [6, 7]
-times, _ = call_agent(agent, GLOBAL_BIG_MAZE_SIZE)
+times, _,a,b = call_agent(agent, GLOBAL_BIG_MAZE_SIZE)
 for j in range(len(times)):
     print('Time for agent', j+6, ':', times[j])
+'''

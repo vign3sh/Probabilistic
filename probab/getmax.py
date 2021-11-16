@@ -1,5 +1,4 @@
-from main.utility import *
-from cell import Cell
+from probab.utility import *
 import random
 
 def get_max(cell, exp_grid, n, agent):

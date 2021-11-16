@@ -5,7 +5,6 @@ import sys
 
 # Call directly whe cell-terrain is already determined
 def examine(cell, exp_grid, agent):
-    i, j = cell.get_xy()
     check = check_goal(cell)
     if check:
         return "goal", cell
