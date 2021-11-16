@@ -4,9 +4,9 @@ def print_ex_grid(g, n):
     for i in range(n):
         for j in range(n):
             if g[i][j].get_target():
-                print('(', g[i][j].get_pg(), ',*) ', end='')
+                print('(', "%.6f" %g[i][j].get_pg(), ',*) ', end='')
             else:
-                print(g[i][j].get_pg(), ' ', end='')
+                print("%.6f" %g[i][j].get_pg(), ' ', end='')
         print()
 
 

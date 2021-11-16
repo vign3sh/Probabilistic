@@ -1,9 +1,12 @@
 from format import get_grid
 from probab.grid import *
 from probab.astar import *
-from probab.examine_optimal import *
+from probab.examine import *
 from probab.utility import *
+from agents.agent import *
 from agents.agent_optimal import *
+from probab.examine_optimal import *
+
 import time
 
 
@@ -62,6 +65,7 @@ def call_agent(n, threshold=None):
     return t, goal_cell, movements, examinations
 
 
-times, _,a,b = call_agent(GLOBAL_BIG_MAZE_SIZE)
+agent = [6, 7]
+times, _, a, b = call_agent(agent, 10)
 for j in range(len(times)):
     print('Time for agent', j+6, ':', times[j])

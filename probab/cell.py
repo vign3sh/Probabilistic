@@ -35,7 +35,7 @@ class Cell:
         return self.Pg
 
     def get_pfg(self):
-        return self.Pf*self.Pg
+        return (1 - self.Pf)*self.Pg
 
     def get_target(self):
         return self.isTarget
