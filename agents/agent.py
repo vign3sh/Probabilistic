@@ -9,6 +9,7 @@ class Agent:
     def __init__(self, number):
         self.type = number
         self.examinations = 0
+        self.goal_count = 0
         self.counter = 0
         self.total = 0
 
@@ -16,25 +17,35 @@ class Agent:
         final_path = [start_cell]
 
         get_terrain_type(start_cell, explored_grid, grid, self.type, examined_cells)
-        is_goal = examine(start_cell, explored_grid, self.type)
+        is_goal = examine(start_cell, explored_grid, self.type, self.goal_count)
+        if check_goal(start_cell):
+            self.goal_count += 1
         self.examinations += 1
         closed_list = set()
         while True:
-
-            goal_cell = get_max(start_cell, explored_grid, self.type, closed_list)
+            sum = check_sum(explored_grid)
+            if sum != 1:
+                print('End is here:', sum)
+                print(len(final_path))
+                # sys.exit()
             if is_goal:
                 # final_path.append(goal_cell)
                 return final_path
+            goal_cell = get_max(start_cell, explored_grid, self.type, closed_list)
+            print(start_cell.get_xy(), '->', goal_cell.get_xy(), " ", self.type)
+            # if self.type == 6:
+               # print_ex_grid(explored_grid, n)
+            # else:
+               # print_pfg(explored_grid, n)
 
-            print(start_cell.get_xy(), '->', goal_cell.get_xy())
-
-            # print_ex_grid(explored_grid, n)
             # max_cell = get_max(start_cell, explored_grid, n, i)
             # print(max_cell.get_xy(), start)
 
             # If we have start cell as goal cell examine again
             if goal_cell == start_cell:
-                is_goal = examine(start_cell, explored_grid, self.type)
+                is_goal = examine(start_cell, explored_grid, self.type, self.goal_count)
+                if check_goal(goal_cell):
+                    self.goal_count += 1
                 self.examinations += 1
                 print_ex_grid(explored_grid, len(explored_grid))
                 continue
@@ -48,7 +59,7 @@ class Agent:
             if len(path) == 0:
                 print("No path found")
                 update_block_prob(goal_cell, explored_grid)
-                print_ex_grid(explored_grid, len(explored_grid))
+                # print_ex_grid(explored_grid, len(explored_grid))
                 # final_path = []
                 # return final_path
                 continue
@@ -68,6 +79,7 @@ class Agent:
                 # Block Found Start Cell changed to it's parent
                 if terrain_type == Block_Terrain:
                     print('Blocked  :', cell.get_xy())
+                    update_block_prob(cell, explored_grid)
                     update_block_prob(goal_cell, explored_grid)
                     # path[i-1] is examined and we are reexamining at start state again
                     # goal_cell = start_cell
@@ -75,7 +87,9 @@ class Agent:
 
                 # Goal Found Exit Agent
                 if cell == goal_cell:
-                    is_goal = examine(cell, explored_grid, self.agent)
+                    is_goal = examine(cell, explored_grid, self.agent, self.goal_count)
+                    if check_goal(cell):
+                        self.goal_count += 1
                     self.examinations += 1
                     if is_goal:
                         final_path.append(cell)

@@ -1,3 +1,5 @@
+import sys
+
 from probab.utility import *
 import random
 from probab.cell import Cell
@@ -38,4 +40,14 @@ def get_max(cell, exp_grid, agent, closed_list=None):
                 elif pfg == maxProb7 and check_dist(cell, maxCell[-1]) == check_dist(cell, exp_grid[i][j]):
                     maxCell.append(exp_grid[i][j])
 
+    for i in maxCell:
+        if i.get_pg() > 1:
+            print('Its over 1')
+            # print_ex_grid(exp_grid, l)
+            # sys.exit()
+    if agent == 6:
+        print(maxProb6)
+
+    elif agent == 7:
+        print(maxProb7)
     return maxCell[random.randint(0, len(maxCell) - 1)]
