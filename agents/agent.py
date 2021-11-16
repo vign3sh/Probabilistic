@@ -7,20 +7,23 @@ class Agent:
 
     def __init__(self, number):
         self.type = number
+        self.examinations = 0
+        self.final_path = []
 
     def agent(self, start_cell, explored_grid, grid, n, examined_cells):
-        final_path = [start_cell]
+        self.final_path = [start_cell]
         while True:
             if start_cell not in examined_cells:
                 next_step, goal_cell = examine_first(start_cell, explored_grid, grid, self.type, examined_cells)
             else:
                 next_step, goal_cell = examine(start_cell, explored_grid, self.type)
+            self.examinations += 1
 
             # Goal Found
 
             if next_step == 'goal':
-                # final_path.append(goal_cell)
-                return final_path
+                # self.final_path.append(goal_cell)
+                return self.final_path
 
             print(start_cell.get_xy(), '->', goal_cell.get_xy())
 
@@ -58,6 +61,7 @@ class Agent:
                     next_step, max_cell = examine(cell, explored_grid, self.type)
                 # print(next_step, cell.get_xy())
                 # Block Found Start Cell changed to it's parent
+                self.examinations += 1
                 if next_step == 'block':
                     # print('Blocked  :', cell.get_xy())
                     # path[i-1] is examined and we are reexamining at start state again
@@ -67,11 +71,13 @@ class Agent:
 
                 # Goal Found Exit Agent
                 elif next_step == 'goal':
-                    final_path.append(cell)
-                    return final_path
+                    self.final_path.append(cell)
+                    return self.final_path
                 start_cell = cell
-                final_path.append(cell)
+                self.final_path.append(cell)
                 '''if max_cell.get_xy() != goal_cell.get_xy():
                     break'''
 
+    def get_examinations(self):
+        return self.examinations
 
