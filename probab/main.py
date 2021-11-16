@@ -1,13 +1,13 @@
 from format import get_grid
 from probab.grid import *
 from probab.astar import *
-from probab.examine import *
+from probab.examine_optimal import *
 from probab.utility import *
-from agents.agent import *
+from agents.agent_optimal import *
 import time
 
 
-def call_agent(agents, n):
+def call_agent(n, threshold=None):
     '''
     grid = get_grid()
     start = [30, 6]
@@ -35,21 +35,22 @@ def call_agent(agents, n):
     print_full_path(path)
     print()
 
-
     print(start, goal)
     print_grid(grid, n, goal)
+    if threshold is None:
+        threshold = [4]
     t = []
-    examinations = [0 for i in range(len(agents))]
-    movements = [0 for i in range(len(agents))]
-    for i in agents:
+    examinations = [0 for i in range(len(threshold))]
+    movements = [0 for i in range(len(threshold))]
+    for i in range(len(threshold)):
         s = time.perf_counter()
         examined_cells = set()
         explored_grid = make_empty_grid(n, goal)
         start_cell = explored_grid[start[0]][start[1]]
-        agent_element = Agent(i)
+        agent_element = Agent(threshold[i])
         path = agent_element.agent(start_cell, explored_grid, grid, n, examined_cells)
-        movements[i - 6] += len(path)
-        examinations[i - 6] += agent_element.get_examinations()
+        movements[i] += len(path)
+        examinations[i] += agent_element.get_examinations()
         for cell in path:
             print(cell.get_xy(), end=' | ')
         print()
@@ -60,14 +61,7 @@ def call_agent(agents, n):
     print('End')
     return t, goal_cell, movements, examinations
 
-        # print_ex_grid(explored_grid, n)
-# step 1: examine start to get goal state
-# step 2: pass the goal state to a-star and get path
-# step 3: agent follows path till block or till goal changes and get new goal
 
-'''
-agent = [6, 7]
-times, _,a,b = call_agent(agent, GLOBAL_BIG_MAZE_SIZE)
+times, _,a,b = call_agent(GLOBAL_BIG_MAZE_SIZE)
 for j in range(len(times)):
     print('Time for agent', j+6, ':', times[j])
-'''
