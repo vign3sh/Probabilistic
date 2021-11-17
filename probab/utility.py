@@ -1,4 +1,8 @@
 import random
+import numpy as np
+import matplotlib as matplotlib
+from matplotlib import pyplot as plt
+
 
 def print_ex_grid(g, n):
     for i in range(n):
@@ -60,7 +64,7 @@ def check_goal(cell):
     val = random.uniform(0, 1)
     if cell.get_target():
         print('Goal ', val, 'vs', cell.get_pf())
-        if val < cell.get_pf():
+        if val > cell.get_pf():
             return True
     return False
 
@@ -90,3 +94,4 @@ def reset_astar_param(grid):
         for j in range(len(grid)):
             grid[i][j].set_parent(None)
             grid[i][j].set_gx(0)
+

@@ -34,7 +34,6 @@ class Agent:
             if goal_cell == start_cell:
                 is_goal = examine(start_cell, explored_grid, self.type)
                 self.examinations += 1
-                print_ex_grid(explored_grid, len(explored_grid))
                 continue
 
             reset_astar_param(explored_grid)
@@ -44,7 +43,6 @@ class Agent:
             if len(path) == 0:
                 print("No path found")
                 update_block_prob(goal_cell, explored_grid)
-                print_ex_grid(explored_grid, len(explored_grid))
                 # final_path = []
                 # return final_path
                 continue

@@ -3,7 +3,7 @@ from probab.astar import *
 from probab.utility import *
 
 
-class Agent:
+class AgentNew:
 
     def __init__(self, threshold):
         self.type = 8
